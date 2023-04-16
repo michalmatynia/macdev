@@ -1,0 +1,67 @@
+// prop-types is a library for typechecking of props
+import PropTypes from 'prop-types'
+
+// @mui material components
+import Icon from '@mui/material/Icon'
+import Collapse from '@mui/material/Collapse'
+
+// Material Kit 2 PRO React components
+import MKBox from 'components/ui/custom-material-kit-pro-react-v2.0.0/MKBox'
+import MKTypography from 'components/ui/custom-material-kit-pro-react-v2.0.0/MKTypography'
+
+// Material Kit 2 PRO React components
+import borders from 'themes/material-kit-pro-react-v2.0.0/base/borders'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+
+function FaqCollapse({ title, open, children, ...rest }) {
+  const { borderWidth, borderColor } = borders
+
+  return (
+    <MKBox mb={2}>
+      <MKBox
+        {...rest}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        py={2}
+        borderBottom={`${borderWidth[1]} solid ${borderColor}`}
+        sx={{ cursor: 'pointer' }}
+      >
+        <MKTypography
+          variant="h5"
+          color={open ? 'dark' : 'text'}
+          sx={{ userSelect: 'none' }}
+        >
+          {title}
+        </MKTypography>
+        <MKBox color={open ? 'dark' : 'text'}>
+          <Icon sx={{ fontWeight: 'bold' }} fontSize="small">
+            {open ? <RemoveIcon /> : <AddIcon />}
+          </Icon>
+        </MKBox>
+      </MKBox>
+      <Collapse timeout={400} in={open}>
+        <MKBox py={2} lineHeight={1}>
+          <MKTypography
+            variant="button"
+            color="text"
+            opacity={0.8}
+            fontWeight="regular"
+          >
+            {children}
+          </MKTypography>
+        </MKBox>
+      </Collapse>
+    </MKBox>
+  )
+}
+
+// Typechecking props for the FaqCollapse
+FaqCollapse.propTypes = {
+  title: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+}
+
+export default FaqCollapse
